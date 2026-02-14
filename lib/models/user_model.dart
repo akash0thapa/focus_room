@@ -1,5 +1,6 @@
 class UserModel {
-  String uid;
+  final String uid;
+  final bool isActive=false;
 
   UserModel({
     required this.uid

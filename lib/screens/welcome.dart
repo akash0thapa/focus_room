@@ -86,7 +86,7 @@ class _WelcomeState extends State<Welcome> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Get Started',
+                      Text('Continue as Guest',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 32,
