@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     //scaffold is wrapped inside the roomlist stream created 
     return StreamProvider<List<RoomModel>>.value(
-      value: DatabaseService(uid: '').roomList,
+      value: DatabaseService().roomList,
       initialData: [],
       child: Scaffold(
         extendBody: true,
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
                 showLogOutDialogBox();
               }, 
               label: Text('Logout',style: textDesign.copyWith(fontSize: 20),),
-              icon: Icon(Icons.person,
+              icon: Icon(Icons.logout,
               size: 30,
               color: Colors.white,
               shadows: [
@@ -95,24 +95,7 @@ class _HomeState extends State<Home> {
               child: RoomList()),
           ],
         ),
-      // ScrollConfiguration(
-      //   behavior: ScrollConfiguration.of(context).copyWith(
-      //   overscroll: false),
-      //    child: ListView.builder(
-      //     itemCount: 10,
-      //     itemBuilder:(context, index) {
-      //       return Padding(
-      //         padding: EdgeInsetsGeometry.symmetric(horizontal: 10,vertical: 10),
-      //         child: ListTile(
-      //           leading: CircleAvatar(),
-      //           title: Text('Title'),
-      //           subtitle: Text('subtitle'),
-      //           tileColor: Colors.blue,
-      //         ),
-      //       );
-      //     },
-      //     ),
-      //  ),
+
         //bottom navigation bar
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(              
@@ -120,9 +103,7 @@ class _HomeState extends State<Home> {
           shape: CircularNotchedRectangle(),
           notchMargin:3,
           height: 60,
-        ),
-        
-      
+        ),            
       ),
     );
   }
@@ -173,12 +154,27 @@ class _HomeState extends State<Home> {
   }
   
   void _showCreateRoomPanel() {
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context, 
-      builder: (context){
-        return CreateRoom();
-      }
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // important to allow full height
+    backgroundColor: Colors.transparent, // important for rounded corners
+    builder: (context) {
+      return Container(
+        height: MediaQuery.of(context).size.height*0.9,
+        decoration: BoxDecoration(
+          color: Colors.blue[700],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30)
+          )
+        ),
+        child: Column(
+          children: [
+            Expanded(child: CreateRoom())
+          ],
+        )
       );
+    }
+  );
   }
 }

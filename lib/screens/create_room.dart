@@ -16,33 +16,33 @@ class _CreateRoomState extends State<CreateRoom> {
   String name='';
   String topic='';
   String description='';
+  double timerValue=15;
+  int memberCount=0;
+  // late DateTime endTime;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        extendBody: true,
-        backgroundColor: Colors.blue[700],
-        // appBar: AppBar(
-        //   title: Text('Create New Room',
-        //   style: textDesign.copyWith(fontSize: 24,),),
-        //   centerTitle: true,
-        //   backgroundColor: Colors.blue[900],
-        // ),
-        body: SingleChildScrollView(         
+    return  Scaffold(
+      backgroundColor: Colors.transparent,
+      body:  SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 10,horizontal: 50),
+            padding: EdgeInsets.symmetric(vertical: 0,horizontal: 50),
             child: Form(   
-              key: _formKey,  
+              key: _formKey,           
               child: Column(
                 children: [
-                  SizedBox(height: 30,),
-                  Text('Create New Room',
+                  Container(
+                    height: 5,
+                    margin:EdgeInsets.fromLTRB(100, 5, 100, 5) ,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)
+      
+                      ),
+                  ),
+                    Text('Create New Room',
                     style: textDesign.copyWith(fontSize: 30,),
                     ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 20,),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Room Name',
@@ -51,16 +51,30 @@ class _CreateRoomState extends State<CreateRoom> {
                          color: Colors.grey[500]
                       )
                     ),
-                    validator:(value) => value!.isEmpty?"Enter the Room Name!":null,
+                    validator: (value) {
+                      if(value!.isEmpty){
+                        return 'Enter Room Name';
+                      }
+                      else if(value.length>20){
+                        return 'Name should be 20 characters only';
+                      }
+                      else {
+                        return null;
+                      }
+                    },
                     onChanged: (value) {
-                      name=value;
+                      setState(() {
+                        name=value.toString();
+                      });
                     },
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 20,),
                   TextFormField(
                     validator: (value) => value!.isEmpty?'Enter the Topic!':null,
                     onChanged:(value) {
-                      topic=value;
+                      setState(() {
+                        topic=value.toString();
+                      });
                     },
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Topic',
@@ -70,13 +84,15 @@ class _CreateRoomState extends State<CreateRoom> {
                       )
                     ),                                     
                   ),
-                  SizedBox(height: 30,),
-                  SizedBox(                 
+                  SizedBox(height: 20,),
+                  SizedBox(                      
                     child: TextFormField(
                       validator: (value) => value!.isEmpty?'Enter the Description!':null,
                       onChanged:(value) {
-                      description=value;
-                    },   
+                        setState(() {
+                          description=value.toString();
+                        });
+                    },  
                       decoration: textInputDecoration.copyWith(
                         hintText: 'Description',
                         hintStyle: TextStyle(
@@ -84,43 +100,65 @@ class _CreateRoomState extends State<CreateRoom> {
                           color: Colors.grey
                         )
                       ),  
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 10,
+                      maxLines: 4,
                       minLines: 4,
-                      textAlignVertical: TextAlignVertical.top,       
+                      maxLength: 100,                      
                     ),
                   ),
-                  SizedBox(height: 50,),
-                 TextButton(
+                  SizedBox(height: 20,),
+                  Text('Session Time',style: textDesign.copyWith(
+                    fontSize: 20
+                  ),),
+                  Slider(
+                    value: timerValue, 
+                    onChanged: (value){
+                      setState(() {
+                        timerValue=value;
+                        // endTime=Duration(minutes: timerValue.toInt()).
+                        // DateTime.now().add(Duration(minutes: timerValue.toInt()));
+                      });
+                    },
+                    divisions: 7,
+                    min: 15,
+                    max: 120,
+                    label: '${timerValue.toInt()}min',
+                    
+                    activeColor: Colors.black,
+                    inactiveColor: Colors.grey,
+                    ),
+                  TextButton(              
                   style: TextButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20,vertical: 5),
                     backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadiusGeometry.circular(10)
+                    elevation: 5,
+                    shadowColor: Colors.black,
+                    shape:RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),                                       
                     )
                   ),
-                  onPressed: ()async{
-                    if(_formKey.currentState!.validate()){
-                       Navigator.pop(context);
-                    //to create a room in firebase collection.
-                    await DatabaseService(uid: 'uid').createRoom('id','name', 'topic', 'description');
-                    // print(room)
-                    }
-                   
-                  }, 
-                  child:Text('Create',
-                  style: textDesign.copyWith(
-                    fontSize: 30,
-                  ),
-                  ),
+                   onPressed: ()async{
+                     if(_formKey.currentState!.validate()){
+                        Navigator.pop(context);
+                     //to create a room in firebase collection.
+                     await DatabaseService().createRoom(name,topic,description,memberCount);
+                     // print(room)
+                     }
+                    
+                   }, 
+                   child:Text('Create',
+                   style: textDesign.copyWith(
+                     fontSize: 24,
                    ),
+                   ),
+                    ),
+                 
                 ],
               ),
-              
+           
             ),
           ),
         ),
-      ),
     );
+      
+  
   }
 }

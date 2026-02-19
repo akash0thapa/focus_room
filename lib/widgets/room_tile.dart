@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:focus_room/models/room_model.dart';
+import 'package:focus_room/screens/show_room_details.dart';
 import 'package:focus_room/styles/text_design.dart';
 
 class RoomTile extends StatelessWidget {
@@ -12,16 +13,16 @@ class RoomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+      padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
       child: ListTile(
         shape:RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(15)
         ),
         tileColor: Colors.blue[700],
-        title: Text('Title',
+        title: Text(roomModel.name,
         style: textDesign.copyWith(fontSize: 24)
         ),
-        subtitle: Text('Topic',      
+        subtitle: Text(roomModel.topic,      
         style: textDesign.copyWith(fontSize: 16)
         ),
         trailing: Row(
@@ -30,7 +31,7 @@ class RoomTile extends StatelessWidget {
           children: [
             Icon(Icons.person,
             size: 35,
-            color: Colors.green,
+            color:(roomModel.memberCount<1)?Colors.red:Colors.green,
              shadows: [
                     Shadow(
                       color: Colors.black,
@@ -38,14 +39,16 @@ class RoomTile extends StatelessWidget {
                     )
                   ]
                 ),
-                Text('0',
+                Text(roomModel.memberCount.toString(),
                 style: textDesign.copyWith(
                   fontSize: 25
                 ))
           ],
         ),
         onTap: () {
-          
+         Navigator.push(context, MaterialPageRoute(builder: (context){
+          return ShowRoomDetails(roomModel: roomModel,);
+         }));
         },
       ),
     );
