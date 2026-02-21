@@ -5,16 +5,15 @@ class DatabaseService {
 
   final CollectionReference roomCollection=FirebaseFirestore.instance.collection('Rooms');
   //to create a room with id in collections in firebase, then goto create button.
-  Future createRoom(String name, String topic,String description,int memberCount)async{
+  Future createRoom(String name, String topic,String description,int memberCount,DateTime endTime)async{
     DocumentReference docRef=roomCollection.doc();
     await docRef.set({
       'id':docRef.id,
       'name': name,
       'topic': topic,
       'description': description,
-      'memberCount':memberCount
-       
-      // 'endTime': time
+      'memberCount':memberCount,
+      'endTime':Timestamp.fromDate(endTime)
     });
   }
  //same as await roomcollection.doc().set
@@ -31,8 +30,9 @@ class DatabaseService {
         name: doc['name'], 
         topic: doc['topic'], 
         description: doc['description'],
-        memberCount: doc['memberCount']
-        // endTime: (doc['endTime'] as Timestamp).toDate()
+        memberCount: doc['memberCount'],
+        endTime: (doc['endTime'] as Timestamp).toDate()
+        
         );
     }).toList();
   }
@@ -62,10 +62,16 @@ class DatabaseService {
       name: snapshot['name'], 
       topic: snapshot['topic'], 
       description: snapshot['description'], 
-      memberCount: snapshot['memberCount']
+      memberCount: snapshot['memberCount'],
+      endTime: (snapshot['endTime'] as Timestamp).toDate()
       );
   }
     Stream<RoomModel> roomStream(String roomId){
       return roomCollection.doc(roomId).snapshots().map(_roomDetails);
+    }
+
+    //to delete room when timer is up
+    Future deleteRoom(String roomId)async{
+      await FirebaseFirestore.instance.collection('Rooms').doc(roomId).delete();
     }
 }

@@ -24,37 +24,41 @@ class _HomeState extends State<Home> {
       initialData: [],
       child: Scaffold(
         extendBody: true,
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.blue[900],
-          title: Text('FocusRoom'),
-          titleTextStyle: textDesign.copyWith(
-            fontSize: 26,          
-          ),   
-          actions: [
-            TextButton.icon(
-              onPressed: ()async{
+          backgroundColor: Color(0xFF003E8F),
+          titleSpacing: 5,
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text('FocusRoom',
+                style: textDesign.copyWith(
+                  fontSize: 22
+                ),
+                ),
+              ),
+               IconButton(
+                onPressed: ()async{
                 showLogOutDialogBox();
-              }, 
-              label: Text('Logout',style: textDesign.copyWith(fontSize: 20),),
-              icon: Icon(Icons.logout,
-              size: 30,
-              color: Colors.white,
-              shadows: [
+                    }, 
+                    icon: Icon(Icons.logout,
+                    size: 26,
+                    color: Colors.white,
+                    shadows: [
                       Shadow(
                         color: Colors.black,
                         blurRadius: 10
                       )
                     ]),
-              ),
-              
-          ],  
+                 ),
+            ],           
+          ),  
         ),
         floatingActionButton: SizedBox(
           height: 70,
           width: 70,
           child: FloatingActionButton(
-            backgroundColor: Colors.blue[900],
+            backgroundColor:Color(0xFF003E8F),
             onPressed: (){
              _showCreateRoomPanel();
             },
@@ -95,11 +99,10 @@ class _HomeState extends State<Home> {
               child: RoomList()),
           ],
         ),
-
         //bottom navigation bar
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(              
-          color: Colors.blue[900],
+          color: Color(0xFF003E8F),
           shape: CircularNotchedRectangle(),
           notchMargin:3,
           height: 60,
@@ -158,11 +161,12 @@ class _HomeState extends State<Home> {
     context: context,
     isScrollControlled: true, // important to allow full height
     backgroundColor: Colors.transparent, // important for rounded corners
+    barrierColor: Colors.black54.withOpacity(0.8),
     builder: (context) {
       return Container(
         height: MediaQuery.of(context).size.height*0.9,
         decoration: BoxDecoration(
-          color: Colors.blue[700],
+          color: Color(0xFF003E8F),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30)

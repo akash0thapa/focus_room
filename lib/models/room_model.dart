@@ -4,7 +4,7 @@ class RoomModel {
   final String topic;
   final String description;
   final int memberCount;
-  // final DateTime endTime;   
+  final DateTime endTime;   
 
   RoomModel({
     required this.id,
@@ -12,6 +12,6 @@ class RoomModel {
     required this.topic,
     required this.description,
     required this.memberCount,
-    // required this.endTime,
+    required this.endTime,
   });
 }

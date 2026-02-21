@@ -32,5 +32,12 @@ final textInputDecoration=InputDecoration(
                         color: Colors.redAccent,
                         width: 2
                       )
+                    ),
+                    errorStyle: TextStyle(
+                      color:Colors.redAccent,
+                      fontSize: 12
+                    ),
+                    counterStyle: TextStyle(
+                      color: Colors.white
                     )
                   );
