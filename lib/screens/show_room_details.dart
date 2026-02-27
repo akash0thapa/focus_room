@@ -192,31 +192,7 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white
                     ),
-                    duration: remaining,
-                    onDone: () {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context, 
-                        builder: (context){
-                          return AlertDialog(
-                            title: Text('Session Ended!',),
-                            actions: [
-                              TextButton(
-                                onPressed: ()async{
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                  await DatabaseService().deleteRoom(room.id);
-                                }, 
-                                child:Text('Ok')
-                                )
-                            ],
-                          );
-                        }
-                        );
-                      });
-                      
-                    },
+                    duration: remaining
                   ),
                   SizedBox(height: 30,),
                   InnerShadow(
@@ -265,13 +241,30 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
                 ],
               ),      
             ),
-             ),
+            // bottomNavigationBar: BottomAppBar(
+            //   color: Colors.transparent,
+            //   child: Container(                   
+            //     margin: EdgeInsets.symmetric(horizontal: 90,vertical: 0),
+            //         height: 50,
+            //         width: 100,
+            //         decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(15),
+            //           color: joined?Colors.redAccent:Colors.green,
+            //         boxShadow: [
+            //           BoxShadow(
+            //             color: Colors.black,
+            //             blurRadius: 3,
+            //           )
+            //         ]
+            //         ),
+            //         child: 
+            //       ),
+            // )
+                 ),
           );
         }
         else{
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
         
       }

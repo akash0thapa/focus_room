@@ -70,7 +70,6 @@ class _WelcomeState extends State<Welcome> {
                   ),
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      
                       padding: EdgeInsets.fromLTRB(30, 0, 0, 0)
                     ),
                     onPressed: ()async{
