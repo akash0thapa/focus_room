@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focus_room/models/user_model.dart';
 import 'package:focus_room/screens/home.dart';
 import 'package:focus_room/screens/welcome.dart';
+import 'package:focus_room/widgets/sliver.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,6 +17,7 @@ class Wrapper extends StatelessWidget {
     }
     else{
       return Home();
+      // return Sliver();
     }
   }
 }

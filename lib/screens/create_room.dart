@@ -147,9 +147,11 @@ class _CreateRoomState extends State<CreateRoom> {
                         )
                       ),
                        onPressed: ()async{
-                         if(_formKey.currentState!.validate()){
-                         
+                         if(_formKey.currentState!.validate()){                     
                           Navigator.pop(context);
+                          // Navigator.push(context, MaterialPageRoute(builder: (context){
+                          //   return CreateRoom();
+                          // }));
                         endTime=DateTime.now().add(Duration(minutes: timerValue.toInt()));
                          //to create a room in firebase collection.
                          await DatabaseService().createRoom(name,topic,description,memberCount,endTime);
