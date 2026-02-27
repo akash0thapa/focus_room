@@ -14,15 +14,18 @@ class _RoomListState extends State<RoomList> {
   @override
   Widget build(BuildContext context) {
     final roomList=Provider.of<List<RoomModel>>(context);
-    return ScrollConfiguration(
-      behavior: ScrollBehavior(       
-      ),
-      child: ListView.builder(
-        itemCount: roomList.length,
-        itemBuilder: (context,index){
-          return RoomTile(roomModel: roomList[index],);
-        }
-        ),
-    );
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        return RoomTile(roomModel:  roomList[index],);
+        },
+        childCount: roomList.length
+        ),    
+      );
+      // child: ListView.builder(
+      //   itemCount: roomList.length,
+      //   itemBuilder: (context,index){
+      //     return RoomTile(roomModel: roomList[index],);
+      //   }
+      //   ),
   }
 }
