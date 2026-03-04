@@ -3,6 +3,7 @@ import 'package:focus_room/models/room_model.dart';
 import 'package:focus_room/screens/create_room.dart';
 import 'package:focus_room/services/database.dart';
 import 'package:focus_room/services/auth.dart';
+import 'package:focus_room/styles/bg_color.dart';
 import 'package:focus_room/styles/text_design.dart';
 import 'package:focus_room/widgets/room_list.dart';
 import 'package:provider/provider.dart';
@@ -23,11 +24,12 @@ class _HomeState extends State<Home> {
       value: DatabaseService().roomList,
       initialData: [],
       child: Scaffold(
+        backgroundColor: Colors.white70,
         floatingActionButton: SizedBox(
           height: 70,
           width: 70,
           child: FloatingActionButton(
-            backgroundColor: Color(0xFF003E8F),
+            backgroundColor:bgColor,
             onPressed: () {
               _showCreateRoomPanel();
             },
@@ -36,14 +38,13 @@ class _HomeState extends State<Home> {
               Icons.add,
               size: 50,
               color: Colors.white,
-              shadows: [Shadow(color: Colors.black, blurRadius: 10)],
             ),
           ),
         ),
         //bottom navigation bar
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          color: Color(0xFF003E8F),
+          color: bgColor,
           shape: CircularNotchedRectangle(),
           notchMargin: 3,
           height: 60,
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
                 floating: true,
                 toolbarHeight: 100,
                 expandedHeight: 120,
-                backgroundColor: Color(0xFF003E8F),
+                backgroundColor: bgColor,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
                     padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
               ),
 
               SliverAppBar(
-                backgroundColor: Color(0xFF003E8F),
+                backgroundColor: bgColor,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Padding(
@@ -183,7 +184,7 @@ class _HomeState extends State<Home> {
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.9),
           height: MediaQuery.of(context).size.height * 0.9,
           decoration: BoxDecoration(
-            color: Color(0xFF003E8F),
+            color: bgColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),

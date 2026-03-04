@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:focus_room/models/room_model.dart';
 import 'package:focus_room/screens/show_room_details.dart';
 import 'package:focus_room/services/database.dart';
-import 'package:focus_room/styles/text_design.dart';
 import 'package:slide_countdown/slide_countdown.dart';
 
 class RoomTile extends StatelessWidget {
@@ -16,17 +15,36 @@ class RoomTile extends StatelessWidget {
   Widget build(BuildContext context) {
     dynamic remaining=roomModel.endTime.difference(DateTime.now());
     return Container(
-      padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.black, width: 1),
+        gradient: LinearGradient(
+          colors:  [
+            Colors.white70,
+            Colors.blue[700]!,
+             Colors.blue[900]!,            
+             ]),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(150),
+            blurRadius: 5,
+             spreadRadius: 1,
+            offset: Offset(0, 2),
+            blurStyle: BlurStyle.inner,
+          ),
+        ],
+      ),
       child: Column(
         children: [
           ListTile(
             shape:RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(15)
+              borderRadius: BorderRadiusGeometry.circular(15),              
             ),
             tileColor: Color(0xFF003E8F),
             title: Text(roomModel.topic,
             style:TextStyle(
-              color: Colors.white,
+            color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 20)
             ),
@@ -36,7 +54,8 @@ class RoomTile extends StatelessWidget {
               children: [
                 Text(roomModel.goal,      
                 style:TextStyle(
-                color: Colors.white,
+                  color: Colors.black,
+                  letterSpacing: 1.5,
                 fontWeight: FontWeight.bold,
                 fontSize: 16
                 )               
@@ -47,9 +66,9 @@ class RoomTile extends StatelessWidget {
                     color:(roomModel.memberCount<1)?Colors.red:Colors.green,                   
                     ),
                     SizedBox(width: 5,),
-                    Text("${roomModel.memberCount} Participants",
+                    Text("${roomModel.memberCount} Participant(s)",
                     style:TextStyle(
-                      color: Colors.white,
+                    color: Colors.black,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1
                     ),

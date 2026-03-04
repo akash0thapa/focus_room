@@ -153,7 +153,7 @@ class _CreateRoomState extends State<CreateRoom> {
                           //   return CreateRoom();
                           // }));
                           endTime = DateTime.now().add(
-                            Duration(seconds: timerValue.toInt()),
+                            Duration(minutes: timerValue.toInt()),
                           );
                           //to create a room in firebase collection.
                           await DatabaseService().createRoom(
