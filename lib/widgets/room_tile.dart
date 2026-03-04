@@ -17,61 +17,80 @@ class RoomTile extends StatelessWidget {
     dynamic remaining=roomModel.endTime.difference(DateTime.now());
     return Container(
       padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
-      child: ListTile(
-        shape:RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(15)
-        ),
-        tileColor: Color(0xFF003E8F),
-        title: Text(roomModel.name,
-        style: textDesign.copyWith(fontSize: 24)
-        ),
-        subtitle: Text(roomModel.topic,      
-        style: textDesign.copyWith(fontSize: 16)
-        ),
-        trailing: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 10),
-              padding: EdgeInsets.symmetric(vertical: 15),
+      child: Column(
+        children: [
+          ListTile(
+            shape:RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(15)
+            ),
+            tileColor: Color(0xFF003E8F),
+            title: Text(roomModel.topic,
+            style:TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 20)
+            ),
+            subtitle: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(roomModel.goal,      
+                style:TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16
+                )               
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.people,
+                    color:(roomModel.memberCount<1)?Colors.red:Colors.green,                   
+                    ),
+                    SizedBox(width: 5,),
+                    Text("${roomModel.memberCount} Participants",
+                    style:TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1
+                    ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            trailing: Container(
+              height: 100,
+              padding: EdgeInsets.symmetric(vertical: 10),
               child: SlideCountdownSeparated(
+                slideAnimationCurve: Curves.easeOutQuint,
                 separatorStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: 16
+                  fontSize: 20
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Colors.blue[700],
-                  
+                  color: Colors.blue[700],                  
                 ),             
                 duration: remaining,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
                 onDone: () async{
+                  // await Future.delayed(const Duration(seconds: 2));
                   await DatabaseService().deleteRoom(roomModel.id);
                 },
+
               ),
             ),
-            Icon(Icons.person,
-            size: 35,
-            color:(roomModel.memberCount<1)?Colors.red:Colors.green,
-             shadows: [
-                    Shadow(
-                      color: Colors.black,
-                      blurRadius: 10
-                    )
-                  ]
-                ),
-                Text(roomModel.memberCount.toString(),
-                style: textDesign.copyWith(
-                  fontSize: 25
-                ))
-          ],
-        ),
-        onTap: () {
-         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return ShowRoomDetails(roomModel: roomModel,);
-         }));
-        },
+            onTap: () {
+             Navigator.push(context, MaterialPageRoute(builder: (context){
+              return ShowRoomDetails(roomModel:roomModel,);
+             }));
+            },
+          ),
+        ],
       ),
     );
   }

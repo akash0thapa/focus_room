@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:focus_room/screens/loading.dart';
 import 'package:focus_room/services/auth.dart';
-import 'package:focus_room/styles/text_design.dart';
-
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -12,100 +10,139 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
-  final AuthService _auth=AuthService();
-  bool isloading=false;
+  final AuthService _auth = AuthService();
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    return isloading ? Loading() : Scaffold(    
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            stops: [
-              0,0.3,1
-            ],
-            colors: [
-              Colors.white,
-              Color(0xFF809EC7),
-              Color(0xFF003E8F)
-
-            ]
-          )
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0,0,0,30),       
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('Welcome To',
-              style: textDesign,
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Main content
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                stops: [0, 1],
+                colors: [Colors.white, Colors.blue[900]!],
               ),
-             
-              Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('Focus',
-                  style: textDesign.copyWith(
-                    color: Colors.yellow
-                  )
+                  // Logo
+                  Container(
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue[600]!.withAlpha(200),
+                          blurRadius: 20,
+                          spreadRadius: 2,
+                          offset: Offset(2, 2),
+                        ),
+                      ],
+                    ),
+                    child: Image.asset('lib/assets/clock_image.png'),
                   ),
-                  Text('Room',
-                  style: textDesign.copyWith(
-                    color: Colors.orangeAccent)
+                  SizedBox(height: 80),
+                  // Texts
+                  Text(
+                    'Welcome To',
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 0),
+                  Text(
+                    'FocusRoom',
+                    style: TextStyle(
+                      fontFamily: 'inter',
+                      fontSize: 45,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[900],
+                    ),
+                  ),
+                  SizedBox(height: 0),
+                  Text(
+                    'Stay Focused and Productive',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 50),
+                  // Button
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xFF003E8F),
+                      ),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                        ),
+                        onPressed: () async {
+                          if (!mounted) return;
+
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          dynamic result = await _auth.signInAnon();
+
+                          if (!mounted) return;
+
+                          if (result == null) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Sign-in failed! Try again."),
+                              ),
+                            );
+                          } else {
+                            Navigator.pushReplacementNamed(context, '/home');
+                          }
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Continue as Guest',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Icon(
+                              Icons.keyboard_arrow_right,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-              Text('Stay Focused and Productive',
-              style: textDesign.copyWith(
-                fontSize: 20,)
-              ),
-              SizedBox(height: 50,),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(                 
-                   borderRadius: BorderRadius.circular(15),
-                    color:Color(0xFF003E8F)
-                  ),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      
-                      padding: EdgeInsets.fromLTRB(30, 0, 0, 0)
-                    ),
-                    onPressed: ()async{
-                      dynamic result=await _auth.signInAnon();
-                      if(result==null){
-                        setState(() {
-                          isloading=false;
-                        });                 
-                      }
-                      else{
-                        setState(() {
-                          isloading=true;
-                        });
-                      }
-                    }, 
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('Continue as Guest',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
-                          color: Colors.white              
-                        ),),
-                        Icon(Icons.keyboard_arrow_right,
-                        size: 40,
-                        color: Colors.white,)
-                      ],
-                    )
-                    ),                
-                ),
-              )
-            ],
+            ),
           ),
-        ),
+
+          // Loading overlay
+          if (isLoading)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: const Center(child: Loading()),
+            ),
+        ],
       ),
     );
   }
