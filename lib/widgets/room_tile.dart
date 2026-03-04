@@ -18,7 +18,7 @@ class RoomTile extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(15, 0, 15, 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black, width: 1),
+        border: Border.all(color: Colors.black, width: 0.5),
         gradient: LinearGradient(
           colors:  [
             Colors.white70,

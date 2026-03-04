@@ -58,59 +58,79 @@ class _HomeState extends State<Home> {
                 floating: true,
                 toolbarHeight: 100,
                 expandedHeight: 120,
-                backgroundColor: bgColor,
+                // backgroundColor: bgColor,
+                
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Padding(
-                    padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Welcome To FocusRoom',
-                          style: textDesign.copyWith(fontSize: 30),
-                        ),
-                        Center(
-                          child: Text(
-                            'Stay Focused and Productive',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[400],
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.1,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                  
+                  background: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                         Colors.blue[700]!,
+                    Colors.blue[900]!, 
+                      ])
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Welcome To FocusRoom',
+                            style: textDesign.copyWith(fontSize: 30),
                           ),
-                        ),
-                      ],
+                          Center(
+                            child: Text(
+                              'Stay Focused and Productive',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[400],
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.1,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
 
               SliverAppBar(
+                elevation: 5,
+                shadowColor: Colors.black,
                 backgroundColor: bgColor,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Padding(
-                    padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text('Rooms', style: textDesign.copyWith(fontSize: 24)),
-                        IconButton(
-                          onPressed: () async {
-                            showLogOutDialogBox();
-                          },
-                          icon: Icon(
-                            Icons.logout_outlined,
-                            color: Colors.white,
-                            size: 28,
-                            shadows: [
-                              Shadow(color: Colors.black, blurRadius: 10),
-                            ],
+                  background: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                         Colors.blue[700]!,
+             Colors.blue[900]!, 
+                      ])
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text('Rooms', style: textDesign.copyWith(fontSize: 24)),
+                          IconButton(
+                            onPressed: () async {
+                              showLogOutDialogBox();
+                            },
+                            icon: Icon(
+                              Icons.logout_outlined,
+                              color: Colors.white,
+                              size: 28,
+                              shadows: [
+                                Shadow(color: Colors.black, blurRadius: 10),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -184,7 +204,7 @@ class _HomeState extends State<Home> {
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.9),
           height: MediaQuery.of(context).size.height * 0.9,
           decoration: BoxDecoration(
-            color: bgColor,
+            color:   Colors.blue[800],
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),

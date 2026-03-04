@@ -128,22 +128,23 @@ class _CreateRoomState extends State<CreateRoom> {
                     activeColor: Colors.black,
                     inactiveColor: Colors.grey,
                   ),
+                  SizedBox(height: 50),
                   InnerShadow(
                     shadows: [
                       Shadow(
-                        color: Colors.black.withOpacity(1),
+                        color: Colors.black.withAlpha(150),
                         blurRadius: 5,
-                        offset: Offset(0, 0),
+                        offset: Offset(0, 5),
                       ),
                     ],
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        padding: EdgeInsets.fromLTRB(30, 5, 30, 5),
+                        padding: EdgeInsets.fromLTRB(30, 12, 30, 12),
                         backgroundColor: Colors.green,
                         elevation: 5,
                         shadowColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       onPressed: () async {
@@ -166,8 +167,13 @@ class _CreateRoomState extends State<CreateRoom> {
                         }
                       },
                       child: Text(
-                        'Create',
-                        style: textDesign.copyWith(fontSize: 24),
+                        'CREATE',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.white,
+                          letterSpacing: 2
+                        )
                       ),
                     ),
                   ),
