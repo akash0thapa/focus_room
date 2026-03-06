@@ -57,8 +57,8 @@ class _WelcomeState extends State<Welcome> {
                   SizedBox(height: 5,),
                   SpinKitPouringHourGlassRefined(
                     color:Colors.blue[900]!,
-                    duration: Duration(seconds: 5),
-                    strokeWidth: 5,
+                    duration: Duration(seconds: 3),
+                    strokeWidth: 7,
                     size: 120,
                     ),
                   SizedBox(height: 50),
