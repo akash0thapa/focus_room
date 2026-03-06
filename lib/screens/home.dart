@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:focus_room/models/room_model.dart';
 import 'package:focus_room/screens/create_room.dart';
 import 'package:focus_room/services/database.dart';
@@ -76,6 +75,7 @@ class _HomeState extends State<Home> {
                       child: Padding(
                         padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               'Welcome To FocusRoom',
@@ -125,14 +125,17 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              SliverAppBar(
-                elevation: 20,
+            SliverAppBar(
+                elevation: 5,
                 shadowColor: Colors.black,
-                backgroundColor: bgColor,
+                backgroundColor:Colors.transparent,
+                floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Stack(
-                    children:[ Container(
+                    children:[ 
+                      Container(
+                        height: double.infinity,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -144,7 +147,7 @@ class _HomeState extends State<Home> {
                         padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text('Rooms', style: textDesign.copyWith(fontSize: 24)),
                             IconButton(
@@ -178,6 +181,31 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+
+            //  SliverAppBar(
+            //   backgroundColor:Colors.transparent,
+            //   flexibleSpace: FlexibleSpaceBar(
+            //     background: Stack(
+            //       children: [
+            //         Container(
+            //           height: double.infinity,
+            //           width: double.infinity,
+            //           decoration: BoxDecoration(
+            //             gradient: LinearGradient(
+            //               colors: [
+            //                Colors.blue[700]!,
+            //                  Colors.blue[900]!, 
+            //             ])
+            //           ),
+            //           child: Row(
+
+            //           ),
+
+            //         ),
+            //         ]
+            //         ),
+            //   ),
+            //  ),
               SliverToBoxAdapter(child: SizedBox(height: 20)),
               RoomList(),
               SliverFillRemaining(
@@ -259,3 +287,5 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_room/models/user_model.dart';
 import 'package:focus_room/services/auth.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if(kIsWeb){
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyCKVqS53HdPGvVfcabSQ9_kanIA1b3UhPE",
@@ -15,6 +17,10 @@ void main() async {
       appId: "1:232707798168:web:63124006807a837d250ced",
     ),
   );
+  }
+  else{
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
