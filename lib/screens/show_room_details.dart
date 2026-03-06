@@ -34,17 +34,24 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
       remaining = Duration.zero;
     }
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         if (joined) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Center(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              margin: const EdgeInsets.all(5),
+              shape:RoundedRectangleBorder(
+                borderRadius:BorderRadius.circular(15)
+              ),
+              duration: const Duration(seconds: 2),
+              content: const Center(
                 child: Text(
                   'You must leave the room to go back!',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
               ),
@@ -156,6 +163,10 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
                       const SizedBox(height: 20),
 
                       SlideCountdownSeparated(
+                        separatorStyle: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold
+                        ),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -278,12 +289,28 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
             /// 🔹 Loading Overlay
             if (_isLoading)
               Container(
-                color: Colors.black.withOpacity(0.4),
-                child: const Center(
+                color: Colors.black.withAlpha(150),
+                child: Center(
                   child:
-                      CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircularProgressIndicator(
+                            color: Colors.white,
+                             ),
+                             const SizedBox(height: 10,),
+                             Text(
+                              joined ? 'Leaving Session...' : 'Joining Session...',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight:
+                                    FontWeight.bold,
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                             
+                        ],
+                      ),
                 ),
               ),
           ],
@@ -292,7 +319,7 @@ class _ShowRoomDetailsState extends State<ShowRoomDetails> {
     );
   }
 
-  // 🔥 SECTION FUNCTION (Inside Same File)
+  //  room information combined
   Widget _roomInfoSection({
     required String title,
     required String value,

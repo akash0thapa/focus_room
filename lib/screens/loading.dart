@@ -16,7 +16,7 @@ class _LoadingState extends State<Loading> {
       body: Center(
         child: SpinKitDualRing(
           duration: Duration(seconds: 5),
-          size: 150,
+          size: 50,
           color: Colors.white,
         ),
       ),

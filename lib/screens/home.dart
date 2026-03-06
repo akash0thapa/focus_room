@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:focus_room/models/room_model.dart';
 import 'package:focus_room/screens/create_room.dart';
 import 'package:focus_room/services/database.dart';
 import 'package:focus_room/services/auth.dart';
 import 'package:focus_room/styles/bg_color.dart';
+import 'package:focus_room/styles/blur_circle.dart';
 import 'package:focus_room/styles/text_design.dart';
 import 'package:focus_room/widgets/room_list.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class _HomeState extends State<Home> {
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+    final width=(MediaQuery.of(context).size.width);
     //scaffold is wrapped inside the roomlist stream created
     return StreamProvider<List<RoomModel>>.value(
       value: DatabaseService().roomList,
@@ -56,82 +59,122 @@ class _HomeState extends State<Home> {
             slivers: [
               SliverAppBar(
                 floating: true,
-                toolbarHeight: 100,
+                toolbarHeight: 120,
                 expandedHeight: 120,
-                // backgroundColor: bgColor,
-                
-                flexibleSpace: FlexibleSpaceBar(
-                  
-                  background: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                         Colors.blue[700]!,
-                    Colors.blue[900]!, 
-                      ])
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Welcome To FocusRoom',
-                            style: textDesign.copyWith(fontSize: 30),
-                          ),
-                          Center(
-                            child: Text(
-                              'Stay Focused and Productive',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey[400],
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.1,
-                              ),
-                              overflow: TextOverflow.ellipsis,
+                backgroundColor: Colors.transparent,               
+                flexibleSpace: FlexibleSpaceBar(                  
+                  background: Stack(
+                    children:[ 
+                      Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                           Colors.blue[700]!,
+                      Colors.blue[900]!, 
+                        ])
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsGeometry.fromLTRB(10, 30, 10, 0),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Welcome To FocusRoom',
+                              style: textDesign.copyWith(fontSize: 30),
                             ),
-                          ),
-                        ],
+                            Center(
+                              child: Text(
+                                'Stay Focused and Productive',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey[400],
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.1,
+                                ),
+                            
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    Positioned(
+                      child: blurredCircle(20,3)
+                      ),
+                      Positioned(
+                        left: width/6,
+                        top: 45,
+                      child: blurredCircle(30,5)
+                      ),
+                       Positioned(
+                        left: width-100,
+                        top:10,
+                      child: blurredCircle(45,2)
+                      ),
+                      Positioned(
+                         right: width/5,
+                        bottom: 55,
+                      child: blurredCircle(20,3),
+                      ),
+                      Positioned(
+                        bottom: 50,
+                        right: width/2,
+                      child: blurredCircle(80,4)
+                      ),
+                    ]
                   ),
                 ),
               ),
 
               SliverAppBar(
-                elevation: 5,
+                elevation: 20,
                 shadowColor: Colors.black,
                 backgroundColor: bgColor,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                         Colors.blue[700]!,
-             Colors.blue[900]!, 
-                      ])
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Rooms', style: textDesign.copyWith(fontSize: 24)),
-                          IconButton(
-                            onPressed: () async {
-                              showLogOutDialogBox();
-                            },
-                            icon: Icon(
-                              Icons.logout_outlined,
-                              color: Colors.white,
-                              size: 28,
-                              shadows: [
-                                Shadow(color: Colors.black, blurRadius: 10),
-                              ],
+                  background: Stack(
+                    children:[ Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                           Colors.blue[700]!,
+                             Colors.blue[900]!, 
+                        ])
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsGeometry.fromLTRB(10, 10, 10, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Rooms', style: textDesign.copyWith(fontSize: 24)),
+                            IconButton(
+                              onPressed: () async {
+                                showLogOutDialogBox();
+                              },
+                              icon: Icon(
+                                Icons.logout_outlined,
+                                color: Colors.white,
+                                size: 28,
+                                shadows: [
+                                  Shadow(color: Colors.black, blurRadius: 10),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
+                     Positioned(
+                      top: 50,
+                      right: width/4,
+                      child: blurredCircle(55,2)
+                      ),
+                       Positioned(
+                      top: 50,
+                      left: width/4,
+                      child: blurredCircle(25,4)
+                      ),
+                    ]
                   ),
                 ),
               ),

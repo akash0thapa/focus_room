@@ -1,4 +1,6 @@
+import 'package:animate_gradient/animate_gradient.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:focus_room/screens/loading.dart';
 import 'package:focus_room/services/auth.dart';
 
@@ -17,39 +19,49 @@ class _WelcomeState extends State<Welcome> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
-          // Main content
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                stops: [0, 1],
-                colors: [Colors.white, Colors.blue[900]!],
-              ),
-            ),
+              children: [
+                // Main content
+                AnimateGradient(
+                  primaryColors: [
+                    Colors.blue[900]!,
+              Colors.white70,
+              
+            ],
+            secondaryColors: [
+              Colors.deepPurple[900]!,     
+              Colors.white70,
+            ],
+            //  curve: Curves.elasticInOut,
+
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   // Logo
-                  Container(
-                    height: 80,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue[600]!.withAlpha(200),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                          offset: Offset(2, 2),
-                        ),
-                      ],
+                  // Container(
+                  //   height: 80,
+                  //   width: 80,
+                  //   decoration: BoxDecoration(
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.blue[600]!.withAlpha(200),
+                  //         blurRadius: 20,
+                  //         spreadRadius: 2,
+                  //         offset: Offset(2, 2),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   child: Image.asset('lib/assets/clock_image.png'),
+                  // ),
+                  SizedBox(height: 5,),
+                  SpinKitPouringHourGlassRefined(
+                    color:Colors.blue[900]!,
+                    duration: Duration(seconds: 5),
+                    strokeWidth: 5,
+                    size: 120,
                     ),
-                    child: Image.asset('lib/assets/clock_image.png'),
-                  ),
-                  SizedBox(height: 80),
+                  SizedBox(height: 50),
                   // Texts
                   Text(
                     'Welcome To',
@@ -77,56 +89,64 @@ class _WelcomeState extends State<Welcome> {
                   SizedBox(height: 50),
                   // Button
                   Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0xFF003E8F),
-                      ),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        ),
-                        onPressed: () async {
-                          if (!mounted) return;
-
-                          setState(() {
-                            isLoading = true;
-                          });
-
-                          dynamic result = await _auth.signInAnon();
-
-                          if (!mounted) return;
-
-                          if (result == null) {
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: AnimateGradient(
+                        primaryColors: [
+                            Colors.blue[900]!,
+                            Colors.blue[900]!
+                          ],
+                          secondaryColors: [
+                          Colors.deepPurple[900]!,
+                          Colors.purpleAccent
+                        
+                          ],
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+                          ),
+                          onPressed: () async {
+                            if (!mounted) return;
+                                    
                             setState(() {
-                              isLoading = false;
+                              isLoading = true;
                             });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Sign-in failed! Try again."),
+                                    
+                            dynamic result = await _auth.signInAnon();
+                                    
+                            if (!mounted) return;
+                                    
+                            if (result == null) {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Sign-in failed! Try again."),
+                                ),
+                              );
+                            } else {
+                              Navigator.pushReplacementNamed(context, '/home');
+                            }
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Continue as Guest',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                  color: Colors.white,
+                                ),
                               ),
-                            );
-                          } else {
-                            Navigator.pushReplacementNamed(context, '/home');
-                          }
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Continue as Guest',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                              Icon(
+                                Icons.keyboard_arrow_right,
+                                size: 40,
                                 color: Colors.white,
                               ),
-                            ),
-                            Icon(
-                              Icons.keyboard_arrow_right,
-                              size: 40,
-                              color: Colors.white,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -139,7 +159,7 @@ class _WelcomeState extends State<Welcome> {
           // Loading overlay
           if (isLoading)
             Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withAlpha(150),
               child: const Center(child: Loading()),
             ),
         ],

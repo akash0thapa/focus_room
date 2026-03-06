@@ -18,20 +18,19 @@ class RoomTile extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(15, 0, 15, 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black, width: 0.5),
         gradient: LinearGradient(
           colors:  [
-            Colors.white70,
-            Colors.blue[700]!,
+            Colors.grey[400]!,
+            // Colors.blue[700]!,
              Colors.blue[900]!,            
              ]),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withAlpha(150),
+            color: Colors.black.withAlpha(100),
             blurRadius: 5,
              spreadRadius: 1,
-            offset: Offset(0, 2),
-            blurStyle: BlurStyle.inner,
+            offset: Offset(3, 3),
+            // blurStyle: BlurStyle.inner,
           ),
         ],
       ),
@@ -60,9 +59,19 @@ class RoomTile extends StatelessWidget {
                 fontSize: 16
                 )               
                 ),
+                Divider(
+                  thickness: 0.5,
+                  color: Colors.grey[400],
+                  ),
                 Row(
                   children: [
                     Icon(Icons.people,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black,
+                        blurRadius: 3
+                      )
+                    ],
                     color:(roomModel.memberCount<1)?Colors.red:Colors.green,                   
                     ),
                     SizedBox(width: 5,),
@@ -78,8 +87,8 @@ class RoomTile extends StatelessWidget {
               ],
             ),
             trailing: Container(
-              height: 100,
-              padding: EdgeInsets.symmetric(vertical: 10),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+              // padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
               child: SlideCountdownSeparated(
                 slideAnimationCurve: Curves.easeOutQuint,
                 separatorStyle: TextStyle(
@@ -88,7 +97,7 @@ class RoomTile extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Colors.blue[700],                  
+                  color:remaining.inMinutes<10?Colors.red: Colors.blue[700],                  
                 ),             
                 duration: remaining,
                 style: TextStyle(
